@@ -1,0 +1,114 @@
+{
+  "preguntes": [
+    {
+      "id": 1,
+      "pregunta": "¿Cuál es la velocidad máxima permitida en una vía urbana?",
+      "respostes": [
+        {"id": 1, "resposta": "50 km/h", "correcta": true},
+        {"id": 2, "resposta": "80 km/h", "correcta": false},
+        {"id": 3, "resposta": "90 km/h", "correcta": false},
+        {"id": 4, "resposta": "100 km/h", "correcta": false}
+      ],
+      "imatge": "./img/1.jpeg"
+    },
+    {
+      "id": 2,
+      "pregunta": "¿Qué debe hacer un conductor ante un semáforo en rojo?",
+      "respostes": [
+        {"id": 1, "resposta": "Detenerse totalmente", "correcta": true},
+        {"id": 2, "resposta": "Reducir la velocidad y pasar", "correcta": false},
+        {"id": 3, "resposta": "Continuar si no hay peatones", "correcta": false},
+        {"id": 4, "resposta": "Tocar el claxon y pasar", "correcta": false}
+      ],
+      "imatge": "./img/2.jpg"
+    },
+    {
+      "id": 3,
+      "pregunta": "¿Cuál es la distancia mínima de seguridad que debe mantener un vehículo en carretera?",
+      "respostes": [
+        {"id": 1, "resposta": "La que permita detenerse en caso de emergencia", "correcta": true},
+        {"id": 2, "resposta": "1 metro", "correcta": false},
+        {"id": 3, "resposta": "10 metros", "correcta": false},
+        {"id": 4, "resposta": "No importa mientras se conduzca despacio", "correcta": false}
+      ],
+      "imatge": "./img/3.jpeg"
+    },
+    {
+      "id": 4,
+      "pregunta": "¿En qué situación está permitido adelantar por la derecha?",
+      "respostes": [
+        {"id": 1, "resposta": "En carreteras con varios carriles en el mismo sentido", "correcta": true},
+        {"id": 2, "resposta": "Siempre que el vehículo de delante vaya despacio", "correcta": false},
+        {"id": 3, "resposta": "En vías urbanas sin señales", "correcta": false},
+        {"id": 4, "resposta": "Nunca está permitido", "correcta": false}
+      ],
+      "imatge": "./img/4.png"
+    },
+    {
+      "id": 5,
+      "pregunta": "¿Qué significa una línea continua blanca en el centro de la calzada?",
+      "respostes": [
+        {"id": 1, "resposta": "Prohibido adelantar y cambiar de carril", "correcta": true},
+        {"id": 2, "resposta": "Permite adelantar con precaución", "correcta": false},
+        {"id": 3, "resposta": "Zona de estacionamiento permitido", "correcta": false},
+        {"id": 4, "resposta": "Indicador de carril reversible", "correcta": false}
+      ],
+      "imatge": "./img/5.jpeg"
+    },
+    {
+      "id": 6,
+      "pregunta": "¿Cuál es la tasa máxima de alcohol permitida para conductores noveles?",
+      "respostes": [
+        {"id": 1, "resposta": "0,3 gramos por litro de sangre", "correcta": true},
+        {"id": 2, "resposta": "0,5 gramos por litro de sangre", "correcta": false},
+        {"id": 3, "resposta": "0,8 gramos por litro de sangre", "correcta": false},
+        {"id": 4, "resposta": "0 gramos por litro de sangre", "correcta": false}
+      ],
+      "imatge": "./img/6.jpeg"
+    },
+    {
+      "id": 7,
+      "pregunta": "¿Qué debe hacer al aproximarse a un paso de peatones sin semáforo?",
+      "respostes": [
+        {"id": 1, "resposta": "Reducir la velocidad y ceder el paso a peatones", "correcta": true},
+        {"id": 2, "resposta": "Acelerar para pasar antes que los peatones", "correcta": false},
+        {"id": 3, "resposta": "Tocar el claxon para advertir a los peatones", "correcta": false},
+        {"id": 4, "resposta": "Continuar sin cambiar la velocidad", "correcta": false}
+      ],
+      "imatge": "./img/7.jpg"
+    },
+    {
+      "id": 8,
+      "pregunta": "¿Qué indica esta señal de tráfico?",
+      "respostes": [
+        {"id": 1, "resposta": "Peligro genérico", "correcta": true},
+        {"id": 2, "resposta": "Prohibido estacionar", "correcta": false},
+        {"id": 3, "resposta": "Ceda el paso", "correcta": false},
+        {"id": 4, "resposta": "Velocidad máxima permitida", "correcta": false}
+      ],
+      "imatge": "./img/8.png"
+    },
+    {
+      "id": 9,
+      "pregunta": "¿Qué documento debe llevar siempre el conductor en el vehículo?",
+      "respostes": [
+        {"id": 1, "resposta": "Permiso de conducir y tarjeta de inspección técnica", "correcta": true},
+        {"id": 2, "resposta": "Solo el permiso de conducir", "correcta": false},
+        {"id": 3, "resposta": "Factura del seguro", "correcta": false},
+        {"id": 4, "resposta": "Ningún documento es obligatorio", "correcta": false}
+      ],
+      "imatge": "./img/9.jpeg"
+    },
+    {
+      "id": 10,
+      "pregunta": "¿Qué acción debe realizar si un vehículo de emergencias con sirena encendida se aproxima por detrás?",
+      "respostes": [
+        {"id": 1, "resposta": "Apartarse y detenerse si es necesario para dejar pasar", "correcta": true},
+        {"id": 2, "resposta": "Acelerar para no entorpecer", "correcta": false},
+        {"id": 3, "resposta": "Ignorar y continuar con la marcha normal", "correcta": false},
+        {"id": 4, "resposta": "Parar en medio de la calzada", "correcta": false}
+      ],
+      "imatge": "./img/10.jpeg"
+    }
+  ]
+}

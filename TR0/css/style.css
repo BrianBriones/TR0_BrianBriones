@@ -1,6 +1,70 @@
-img{
-    width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
+/* Contenedor principal */
+#questionari {
+  width: 90%;
+  max-width: 600px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+/* Pregunta */
+#questionari h3 {
+  font-size: 1.3rem;
+  color: #222;
+  margin-bottom: 12px;
+}
+
+/* Imagen */
+#questionari img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  margin-bottom: 18px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Botones de respuestas */
+#questionari button {
+  display: block;
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 14px 10px;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+/* Hover */
+#questionari button:hover {
+  background-color: #0056b3;
+}
+
+/* Active */
+#questionari button:active {
+  background-color: #003f7f;
+  transform: scale(0.97);
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 400px) {
+  #questionari {
+    padding: 12px 15px;
+  }
+
+  #questionari h3 {
+    font-size: 1.1rem;
+  }
+
+  #questionari button {
+    font-size: 1rem;
+    padding: 12px 8px;
+  }
 }
