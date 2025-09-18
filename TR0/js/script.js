@@ -4,7 +4,11 @@ let estatDeLaPartida = {
 };
  function actualitzarMarcador() {
     let marcador = document.getElementById("marcador");
-    marcador.innerHTML = `Pregunta ${estatDeLaPartida.contadorPreguntes} Respostes ${estatDeLaPartida.respostesUsuari.length}`;
+    let htmlString= `Preguntes respostes: ${estatDeLaPartida.contadorPreguntes}/20 <br>`;
+    for (let i=0; i<estatDeLaPartida.respostesUsuari.length; i++) {
+        htmlString += `<p>Pregunta ${i+1} : Resposta ${estatDeLaPartida.respostesUsuari[i]+1}</p>`;
+    }
+    marcador.innerHTML += htmlString;
 }
 function marcarRespuesta(numPregunta,  numResposta){
     estatDeLaPartida.respostesUsuari[numPregunta] = numResposta;
