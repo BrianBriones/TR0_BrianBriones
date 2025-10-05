@@ -30,7 +30,9 @@ Mitjançant la formació i l’avaluació de coneixements sobre normativa i segu
 ## Enllaç al projecte desplegat
 **Vercel:** [https://tr-0-brian-briones.vercel.app/TR0/](https://tr-0-brian-briones.vercel.app/TR0/)
 
----
+## Enllaç video Autoescola BB
+
+[https://www.youtube.com/watch?v=PZxhfprcRTg](https://www.youtube.com/watch?v=PZxhfprcRTg)
 
 ## Captures
 
