@@ -4,15 +4,38 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>AutoEscolaBB</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
-  <a href="admin.php" class="admin-button">Admin</a>
-  <h1>AutoEscolaBB</h1>
-  <p>Bienvenido a la Autoescuela BBBB. Aquí puedes practicar para tu examen de conducir.</p>
-  <div id="app"></div>
-  <div id ="marcador"></div>
+  <div id="pantallaInicio" class="pantalla-inicio">
+    <div class="overlay"></div>
+    <div class="inicio-contenido">
+      <h1>Benvingut a AutoEscolaBB</h1>
+      <p>Posa’t a prova amb el test  d’autoescola.</p>
+      <div class="botones-inicio">
+        <button id="btnJugar" class="btn-home play">Jugar</button>
+        <button id="btnAdmin" class="btn-home admin" onclick="window.location.href='admin.php'">
+          Entrar com a admin
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="introModal" class="intro-modal" style="display:none;">
+    <div class="intro-content">
+      <p>Tindrás <strong>30 segons</strong> per respondre el màxim nombre de preguntes que puguis.<br>
+      ¡Demostra el teu nivell! </p>
+      <p class="motivadora">¿Preparat?</p>
+      <div id="countdown" class="countdown">5</div>
+    </div>
+  </div>
+
+  <div id="gameContainer" style="display:none;">
+    <div id="marcador"></div>
+    <div id="app"></div>
+  </div>
+
   <script src="js/script.js"></script>
 </body>
 </html>

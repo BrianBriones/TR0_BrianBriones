@@ -1,25 +1,68 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const NPREGUNTAS = 10; // número de preguntas a cargar
+  const NPREGUNTAS = 10;
   const app = document.getElementById("app");
   const marcadorDiv = document.getElementById("marcador");
-
 
   let estatDeLaPartida = {
     preguntaActual: 0,
     contadorPreguntes: 0,
     respostesUsuari: [],
-    tempsRestant: 60,
+    tempsRestant: 30,
     preguntes: []
   };
 
   let idTimer;
 
-  // === GUARDAR EN LOCALSTORAGE ===
+  //iniciar cuenta atrás
+  function iniciarCuentaAtras(callback) {
+    let introModal = document.getElementById("introModal");
+    if (!introModal) {
+
+      introModal = document.createElement("div");
+      introModal.id = "introModal";
+      introModal.innerHTML = `
+        <div class="intro-content">
+          <h2>Prepárate 🧠</h2>
+          <p>Tendrás <strong>30 segundos</strong> por pregunta. ¡Concéntrate y da lo mejor de ti!</p>
+          <p class="motivadora">¿Listo?</p>
+          <div id="countdown" class="countdown">5</div>
+        </div>
+      `;
+      document.body.appendChild(introModal);
+    }
+
+    const countdownEl = introModal.querySelector("#countdown");
+
+    introModal.style.display = "flex";
+    introModal.style.opacity = "1";
+
+    let count = 5;
+    countdownEl.textContent = count;
+    // Evitar que se ejecute dos veces si ya hay un intervalo activo
+    if (introModal.dataset.countdownActive === "true") return;
+    introModal.dataset.countdownActive = "true";
+    const timer = setInterval(() => {
+      count--;
+      if (count > 0) {
+        countdownEl.textContent = count;
+      } else {
+        clearInterval(timer);
+        introModal.style.opacity = "0";
+        setTimeout(() => {
+          introModal.style.display = "none";
+          introModal.dataset.countdownActive = "false";
+          callback(); 
+        }, 800);
+      }
+    }, 1000);
+  }
+
+  //GUARDAR EN LOCALSTORAGE
   function guardarPartida() {
     localStorage.setItem("partida", JSON.stringify(estatDeLaPartida));
   }
 
-  // === RECUPERAR DE LOCALSTORAGE ===
+  //RECUPERAR DE LOCALSTORAGE
   function carregarPartida() {
     if (localStorage.partida) {
       estatDeLaPartida = JSON.parse(localStorage.getItem("partida"));
@@ -28,37 +71,41 @@ document.addEventListener("DOMContentLoaded", () => {
     return false;
   }
 
-  // === BORRAR PARTIDA ===
+  //BORRAR PARTIDA
   function esborrarPartida() {
     localStorage.removeItem("partida");
     estatDeLaPartida = {
       preguntaActual: 0,
       contadorPreguntes: 0,
       respostesUsuari: [],
-      tempsRestant: 60,
+      tempsRestant: 30,
       preguntes: []
     };
     clearInterval(idTimer);
-    carregarPreguntes(NPREGUNTAS);
+    iniciarCuentaAtras(() => carregarPreguntes(NPREGUNTAS)); // ⬅️ ahora se reinicia tras cuenta atrás
   }
 
-  // === CARGAR PREGUNTAS ===
+  //CARGAR PREGUNTAS
   async function carregarPreguntes(n = NPREGUNTAS) {
     try {
       if (!carregarPartida()) {
         const res = await fetch(`./getPreguntas.php?n=${n}`);
         if (!res.ok) throw new Error("Error cargando preguntas");
         estatDeLaPartida.preguntes = await res.json();
-        estatDeLaPartida.respostesUsuari = new Array(estatDeLaPartida.preguntes.length).fill(null);
+        estatDeLaPartida.respostesUsuari = new Array(
+          estatDeLaPartida.preguntes.length
+        ).fill(null);
       }
-      iniciarTimer();
-      mostrarPregunta();
+        iniciarTimer();
+        mostrarPregunta();
+
+
     } catch (e) {
       app.innerHTML = `<p>Error al cargar preguntes: ${e.message}</p>`;
     }
   }
 
-  // === TIMER ===
+  //Temporizador
   function iniciarTimer() {
     clearInterval(idTimer);
     idTimer = setInterval(() => {
@@ -73,30 +120,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
   }
 
-  // === MARCADOR ===
+  //MARCADOR
   function actualitzaMarcador() {
     if (!marcadorDiv) return;
     let htmlString = `
-      Pregunta ${estatDeLaPartida.preguntaActual + 1}/${estatDeLaPartida.preguntes.length} <br>
+    <div class="contador-top">
+      <span>Pregunta ${estatDeLaPartida.preguntaActual + 1}/${estatDeLaPartida.preguntes.length}</span> <br>
+    </div>  
       Temps restant: ${estatDeLaPartida.tempsRestant}s
       <div class="progress">
-        <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:${(estatDeLaPartida.tempsRestant/60)*100}%"></div>
+        <div class="progress-bar" style="width:${(estatDeLaPartida.tempsRestant / 30) * 100}%"></div>
       </div>
       <div> <button id="btnBorrar" class="btn btn-danger">Borrar Partida</button> </div>
     `;
     marcadorDiv.innerHTML = htmlString;
-    document.getElementById("btnBorrar").addEventListener("click", esborrarPartida);
+    document
+      .getElementById("btnBorrar")
+      .addEventListener("click", esborrarPartida);
   }
 
-  // === MOSTRAR PREGUNTA ===
+  // MOSTRAR PREGUNTA
   function mostrarPregunta() {
+    console.log("Mostrando pregunta:", estatDeLaPartida.preguntaActual);
     const total = estatDeLaPartida.preguntes.length;
     const p = estatDeLaPartida.preguntes[estatDeLaPartida.preguntaActual];
     app.innerHTML = "";
 
     const contador = document.createElement("div");
     contador.className = "contador";
-    contador.textContent = `Pregunta ${estatDeLaPartida.preguntaActual + 1} de ${total}`;
     app.appendChild(contador);
 
     const card = document.createElement("div");
@@ -126,15 +177,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Restaurar selección previa del usuario
     if (estatDeLaPartida.respostesUsuari[estatDeLaPartida.preguntaActual] != null) {
-      const prev = estatDeLaPartida.respostesUsuari[estatDeLaPartida.preguntaActual];
-      const radioPrev = document.querySelector(`input[value="${prev}"][name="q${estatDeLaPartida.preguntaActual}"]`);
+      const prev =
+        estatDeLaPartida.respostesUsuari[estatDeLaPartida.preguntaActual];
+      const radioPrev = document.querySelector(
+        `input[value="${prev}"][name="q${estatDeLaPartida.preguntaActual}"]`
+      );
       if (radioPrev) radioPrev.checked = true;
     }
 
-    const btn = document.createElement("button");
-    btn.className = "btn-submit";
-    btn.textContent = estatDeLaPartida.preguntaActual === total - 1 ? "Finalitzar" : "Següent";
-    btn.addEventListener("click", () => {
+    // Botón "Anterior"
+    if (estatDeLaPartida.preguntaActual > 0) {
+      const btnAnterior = document.createElement("button");
+      btnAnterior.textContent = "Anterior";
+      btnAnterior.className = "btn-previous";
+      btnAnterior.style.marginRight = "10px";
+      btnAnterior.addEventListener("click", () => {
+        estatDeLaPartida.preguntaActual--;
+        mostrarPregunta();
+      });
+      card.appendChild(btnAnterior);
+    }
+
+    // Botón "Següent" o "Finalitzar"
+    const btnSeguent = document.createElement("button");
+    btnSeguent.className = "btn-submit";
+    btnSeguent.textContent =
+      estatDeLaPartida.preguntaActual === total - 1
+        ? "Finalitzar"
+        : "Següent";
+    btnSeguent.addEventListener("click", () => {
       const seleccion = document.querySelector(
         `input[name="q${estatDeLaPartida.preguntaActual}"]:checked`
       );
@@ -142,8 +213,11 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Selecciona una resposta abans de continuar.");
         return;
       }
+
       // Guardamos la respuesta
-      estatDeLaPartida.respostesUsuari[estatDeLaPartida.preguntaActual] = parseInt(seleccion.value, 10);
+      estatDeLaPartida.respostesUsuari[
+        estatDeLaPartida.preguntaActual
+      ] = parseInt(seleccion.value, 10);
       estatDeLaPartida.contadorPreguntes++;
 
       guardarPartida();
@@ -156,13 +230,13 @@ document.addEventListener("DOMContentLoaded", () => {
         enviarResultats();
       }
     });
-    card.appendChild(btn);
+    card.appendChild(btnSeguent);
 
     app.appendChild(card);
     actualitzaMarcador();
   }
 
-  // === ENVIAR RESULTADOS ===
+  // ENVIAR RESULTADOS
   async function enviarResultats() {
     try {
       const res = await fetch("./finalitza.php", {
@@ -171,18 +245,18 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({
           respostes: estatDeLaPartida.respostesUsuari,
           preguntes: estatDeLaPartida.preguntes
-        }),
+        })
       });
       if (!res.ok) throw new Error("Error al enviar respuestas");
       const resultat = await res.json();
-      localStorage.removeItem("partida"); // limpiar al terminar
+      localStorage.removeItem("partida");
       mostrarResultat(resultat);
     } catch (e) {
       app.innerHTML = `<p>Error al enviar respostes: ${e.message}</p>`;
     }
   }
 
-  // === MOSTRAR RESULTADOS ===
+  // MOSTRAR RESULTADOS
   function mostrarResultat(resultat) {
     app.innerHTML = `
       <div class="result">
@@ -207,8 +281,29 @@ document.addEventListener("DOMContentLoaded", () => {
     restartBtn.className = "btn-restart";
     restartBtn.addEventListener("click", () => esborrarPartida());
     app.appendChild(restartBtn);
+
+
+    const backBtn = document.createElement("button");
+    backBtn.textContent = "🏠 Tornar a inici";
+    backBtn.className = "btn-home back";
+    backBtn.style.marginLeft = "10px";
+    backBtn.addEventListener("click", () => {
+      location.reload(); 
+    });
+    app.appendChild(backBtn);
   }
 
-  // Inicia el juego (intenta cargar partida previa o empezar nueva)
-  carregarPreguntes(NPREGUNTAS);
+  // Espera a que el usuario pulse "Jugar"
+  const btnJugar = document.getElementById("btnJugar");
+  const pantallaInicio = document.getElementById("pantallaInicio");
+  const gameContainer = document.getElementById("gameContainer");
+
+  btnJugar.addEventListener("click", () => {
+    pantallaInicio.style.display = "none"; 
+    gameContainer.style.display = "block"; 
+
+    iniciarCuentaAtras(() => {
+      carregarPreguntes(NPREGUNTAS);
+    });
+  });
 });
